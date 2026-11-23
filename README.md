@@ -84,12 +84,47 @@ private async Task WaitFirstFrameAsync()
 
 ## 目录
 
+ILSpy 导出时把所有无命名空间的类平铺在根目录（2,742 个 `.cs` 挤在一起）。已按**类名前缀**机械分到 `src/` 下，规则一句话：先取类名前缀，数量够的成目录，不够的按后缀（`Component` / `Sprite` / `Config` / `State` / `Manager` / `Handler`）兜底。**只移动文件，未改任何文件名或内容**，C# 目录不参与命名空间解析，编译结果完全一致（0 error / 508 warning，dll 大小不变）。
+
 ```
-*.cs                      反编译出的全部源码（ILSpy 平铺导出，无命名空间分目录）
+PlantsVsZombies.csproj
 libs/                     修好的依赖库（Mono.Cecil 重定向后的 Microsoft.Extensions.* 等）
-PlantsVsZombies.csproj    HintPath 指向 libs/
-__PrivateImplementationDetails.cs  手写的 InlineArray / span 等价实现
+Properties/
+src/
+  Support/                编译辅助类型：InlineArray2..9、PrivateImplementationDetails
+  TowerDefense/           TowerDefense* 前缀，1022 个，主游戏逻辑
+    Plant/        359     植物
+    Zombie/       211     僵尸
+    Character/     94
+    Map/           59
+    Battle/        54
+    Level/         46
+    Projectile/    36
+    Item/          19
+    Grave/         13
+    Other/        131     其余按后缀分 Rest/Config/Manager/State
+  Misc/                   其余 994 个类，按类名首词分
+    Adobe/         97     Adobe Animate 导出管线（PackedClip / CpuPose 等）
+    State/         86     StateChart / StateMachine* 状态机框架
+    Zombie/        81     僵尸精灵与变体（ZombieBalloonSprite 等）
+    Interfaces/    38     接口（IAabbAreaQuery2D 等）
+    Level/         27     关卡与关卡编辑器
+    Dialog/        26
+    Character/     25
+    Fire/          21
+    Shovel/        15
+    Properties/    14
+    Card/          13
+    Pumpkin/       10
+    Projectile/    10
+    Other/        531     前缀不足 10 个的，按后缀分
+                          Component 135 / Sprite 73 / Config 35 / Manager 22
+                          / State 14 / Handler 10 / Definition 2 / Rest 240
+PVZHE.ModEditor.*/        718 个已带命名空间的类，ILSpy 原本就分了目录，未动
+GodotPlugins.Game/
 ```
+
+注意 `TowerDefense/` 与 `Misc/` 下同名目录（Zombie、Level、Character、Projectile、Battle）不是重复：前者是 `TowerDefenseZombie*` 这类带主前缀的命名，后者是裸 `Zombie*` 命名，是两批不同写法。
 
 ## 已知未完成
 
