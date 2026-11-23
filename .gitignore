@@ -1,0 +1,10 @@
+# 构建产物
+bin/
+obj/
+
+# 备份的旧工程文件（dnSpy 生成，已被 ILSpy 版取代）
+*.dnspy.csproj.bak
+
+# 编译日志
+build*.log
+headless_verbose*.log
