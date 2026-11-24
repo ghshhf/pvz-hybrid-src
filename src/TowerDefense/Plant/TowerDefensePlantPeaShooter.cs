@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Godot;
@@ -39,9 +40,11 @@ public class TowerDefensePlantPeaShooter : TowerDefensePlant
 
 	private FireComponent _fireComponent;
 
-	private double _fireInterval = 1.5;
+	// Custom balance tweak (pvz-hybrid-src): faster pea shooter.
+	// Original values: fireInterval = 1.5, fireNum = 2.
+	private double _fireInterval = 0.9;
 
-	private int _fireNum = 2;
+	private int _fireNum = 3;
 
 	private string _projectileName = "Pea";
 
@@ -129,9 +132,11 @@ public class TowerDefensePlantPeaShooter : TowerDefensePlant
 
 	public override void ImportVariantSave(Dictionary data)
 	{
-		fireNum = (data.ContainsKey("fireNum") ? data["fireNum"].AsInt32() : 2);
+		// Custom balance tweak: enforce the faster fire profile even when the
+		// serialized scene data carries the original (slower) values.
+		fireNum = Math.Max(3, data.ContainsKey("fireNum") ? data["fireNum"].AsInt32() : 3);
 		projectileName = (data.ContainsKey("projectileName") ? data["projectileName"].AsString() : "Pea");
-		fireInterval = (data.ContainsKey("fireInterval") ? data["fireInterval"].AsDouble() : 1.5);
+		fireInterval = Math.Min(0.9, Math.Max(0.1, data.ContainsKey("fireInterval") ? data["fireInterval"].AsDouble() : 0.9));
 	}
 
 	[EditorBrowsable(EditorBrowsableState.Never)]
