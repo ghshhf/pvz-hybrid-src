@@ -13,25 +13,25 @@
   <ItemGroup />
   <ItemGroup>
     <Reference Include="GodotSharp">
-      <HintPath>E:/pvz_ilspy/libs/GodotSharp.dll</HintPath>
+      <HintPath>libs/GodotSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging.Abstractions">
-      <HintPath>E:/pvz_ilspy/libs/Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+      <HintPath>libs/Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="ZLogger">
-      <HintPath>E:/pvz_ilspy/libs/ZLogger.dll</HintPath>
+      <HintPath>libs/ZLogger.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis">
-      <HintPath>E:/pvz_ilspy/libs/Microsoft.CodeAnalysis.dll</HintPath>
+      <HintPath>libs/Microsoft.CodeAnalysis.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis.CSharp">
-      <HintPath>E:/pvz_ilspy/libs/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+      <HintPath>libs/Microsoft.CodeAnalysis.CSharp.dll</HintPath>
     </Reference>
     <Reference Include="ZString">
-      <HintPath>E:/pvz_ilspy/libs/ZString.dll</HintPath>
+      <HintPath>libs/ZString.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging">
-      <HintPath>E:/pvz_ilspy/libs/Microsoft.Extensions.Logging.dll</HintPath>
+      <HintPath>libs/Microsoft.Extensions.Logging.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

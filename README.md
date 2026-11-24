@@ -21,19 +21,15 @@
 
 ## 构建
 
-需要 .NET 9 SDK（本仓库验证于 9.0.315，运行时 9.0.17）。若你的 SDK 不在默认位置：
-
-```bash
-DOTNET_ROOT='K:\DevTools\dotnet' /k/DevTools/dotnet/dotnet.exe build
-```
-
-或直接：
+需要 .NET 9 SDK。`global.json` 已钉住 `9.0.x`（`rollForward: latestFeature`），装任一 9.0 SDK 即可，本机验证于 9.0.321。
 
 ```bash
 dotnet build
 ```
 
-产物在 `bin/Debug/net9.0/PlantsVsZombies.dll`。
+若 SDK 不在系统 PATH，把 `dotnet` 换成其绝对路径即可，例如 `D:/DevTools/dotnet/dotnet.exe build`。依赖库全在仓库的 `libs/`，csproj 用相对路径引用，换机器无需改配置。
+
+产物在 `bin/Debug/net9.0/PlantsVsZombies.dll`。每次 push / PR 由 GitHub Actions 自动构建并校验产物，基线为 0 error / 508 warning、dll 约 21.4 MB。
 
 ## 运行
 

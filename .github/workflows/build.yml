@@ -1,0 +1,39 @@
+name: build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Build (0 error required)
+        shell: pwsh
+        run: |
+          $output = dotnet build PlantsVsZombies.csproj -c Debug -v:minimal 2>&1 | Out-String
+          Write-Output $output
+          $errors = [regex]::Matches($output, '(?m)^\s*\d+\s+Error\(s\)').Count
+          if ($LASTEXITCODE -ne 0 -or $output -match '(?m)^\s*[1-9]\d*\s+Error\(s\)') {
+            Write-Error "Build failed: errors present"
+            exit 1
+          }
+
+      - name: Verify output DLL size
+        shell: pwsh
+        run: |
+          $dll = Get-Item 'bin/Debug/net9.0/PlantsVsZombies.dll'
+          Write-Output "DLL size: $($dll.Length) bytes"
+          if ($dll.Length -lt 20MB) {
+            Write-Error "Unexpected DLL size"
+            exit 1
+          }
