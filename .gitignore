@@ -8,3 +8,4 @@ obj/
 # 编译日志
 build*.log
 headless_verbose*.log
+tools/last-run.log
